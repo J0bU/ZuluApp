@@ -1,3 +1,56 @@
+
+# ZuluApp
+
+How to use the endpoints?
+
+Well, this project has 5 endpoints running on Heroku:
+
+- https://zulu-app.herokuapp.com/auth/signup ``POST``
+- https://zulu-app.herokuapp.com/auth/signin ``POST``
+- https://zulu-app.herokuapp.com/users/me  ``GET``
+- https://zulu-app.herokuapp.com/wallets/createWallet ``POST``
+- https://zulu-app.herokuapp.com/wallets/updateWallet ``PUT``
+
+Payloads:
+
+1. This endpoint doesn't require token but it gonna give you one.
+``
+{
+    "email": "email@gmail.com",
+    "hash": "password",
+    "fullName": "name",
+    "address": "Address"
+}``
+
+2. This endpoint doesn't require token but it gonna give you one
+``
+{
+    "email": "email@gmail.com",
+    "hash":"password"
+}``
+
+These two first endpoints don't require token, however these endpoints going to give you an access_token, you need this to use the another ones endpoints.
+
+3. This endpoint doesn't have body
+
+4. This endpoints requires token to works, 
+To put the token just go to ``headers`` and put ``Authorization`` and the token.
+``
+{
+    "balanceUSD": 3000,
+    "balanceCOP": 3000
+}
+``
+
+5.This endpoints requires token to works, 
+To put the token just go to ``headers`` and put ``Authorization`` and the token.
+
+``
+{
+    "newMoney": 1000
+}``
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
