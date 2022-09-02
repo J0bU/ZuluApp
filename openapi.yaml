@@ -1,0 +1,178 @@
+openapi: 3.0.3
+info:
+  title: Zulu Interview 
+  description: This is a project to Zulu, the purpose of this project is to make an API to clients and wallets, the client can have a wallet and put money on it.
+  version: 1.0.0
+servers:
+- url: https://zulu-app.herokuapp.com 
+tags:
+- name: auth 
+  description: This endpoint allows to signup an user and signin an user
+- name: users
+  description: This endpoint allow get the data from an user
+- name: wallets
+  description: This endpoint allow create a new wallet an to put more money on it
+  
+paths: 
+  /auth/signup:
+    post: 
+      tags:
+      - auth 
+      summary: Create a new user on mongo database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyUsersPost'
+        required: true
+      responses: 
+        201:
+          description: (CREATE) a new user was create
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        500: 
+          description: Server error
+  /auth/signin:
+    post:
+      tags:
+      - auth 
+      summary: Login the user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodUserSignin'
+        required: true
+      responses: 
+          201:
+            description: (CREATE) a new user was create
+          400:
+            description: Bad request
+          401:
+            description: Unauthorized
+          500: 
+            description: Server error
+        
+  /user/me:
+    get:
+      tags:
+      - users
+      summary: Allow get the data from an user
+      parameters:
+      - token:
+        in: header 
+        name: Authorization
+        description: bearer authentication token
+        required: true
+      responses: 
+        200:
+          description: get the user
+        401:
+          description: Unauthorized
+        500: 
+          description: Server error
+  /wallet/createWallet:
+    post:
+      tags:
+      - wallets
+      summary: Create a new wallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyWalletPost'
+        required: true
+      parameters:
+      - token:
+        in: header 
+        name: Authorization
+        description: bearer authentication token
+        required: true
+      responses: 
+        201:
+          description: CREATE new wallet
+        401:
+          description: Unauthorized
+        500: 
+          description: Server error
+          
+  /wallet/updateWallet:
+    put:
+      tags:
+      - wallets
+      summary: Update the balance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyWalletPut'
+        required: true
+      parameters:
+      - token:
+        in: header 
+        name: Authorization
+        description: bearer authentication token
+        required: true
+      responses: 
+        201:
+          description: CREATE new wallet
+        401:
+          description: Unauthorized
+        500: 
+          description: Server error
+  
+  
+
+components:
+  responses:
+    Unauthorized: 
+      description: (Unauthorized) token is needed
+    BadRequest:
+      description: (Bad request) the credentials are wrong!
+    ServerError:
+      description: Internal error!
+      
+  schemas: 
+    BodyUsersPost:
+      type: object
+      properties: 
+        email:
+          type: string
+          description: user email
+        hash:
+          type: string
+          description: user password
+        fullName:
+          type: string
+          description: user fullname
+        address:
+          type: string
+          description: user address
+    BodUserSignin:
+      type: object
+      properties: 
+        email:
+          type: string
+          description: user email
+        hash:
+          type: string
+          description: user password
+    BodyWalletPost:
+      type: object
+      properties: 
+        balanceUSD:
+          type: number
+          description: balance USD
+        balanceCOP:
+          type: number
+          description: balance COP
+    BodyWalletPut:
+      type: object
+      properties: 
+        newMoney:
+          type: number
+          description: New value to update
+          
+        
